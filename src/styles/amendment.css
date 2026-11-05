@@ -1,0 +1,123 @@
+
+.amendment-nature {
+  width: 100%;
+}
+
+.amendment-nature .application-step-heading {
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+.amendment-nature .application-step-heading h2 {
+  margin: 0 0 8px;
+  color: #003153;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.amendment-nature .application-step-heading p {
+  margin: 0;
+  color: #627587;
+  font-size: 12px;
+}
+
+.amendment-nature-card {
+  width: 100%;
+  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #dce5ec;
+  border-radius: 8px;
+}
+
+.amendment-nature .amendment-note {
+  margin: 0 0 20px;
+  color: #263746;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.amendment-nature .amendment-note strong {
+  color: #003153;
+  font-weight: 700;
+}
+
+.amendment-nature .amendment-nature-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  width: 100%;
+}
+
+.amendment-nature .amendment-option {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  width: 100%;
+  padding: 16px;
+  background: #ffffff;
+  border: 1px solid #dce5ec;
+  border-radius: 7px;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.amendment-nature .amendment-option:hover {
+  border-color: #075b7a;
+}
+
+.amendment-nature .amendment-option.selected {
+  background: #f0f8fc;
+  border-color: #075b7a;
+}
+
+.amendment-nature .amendment-option input[type="checkbox"] {
+  display: block;
+  flex: 0 0 16px;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  padding: 0;
+  accent-color: #075b7a;
+  cursor: pointer;
+}
+
+.amendment-nature .amendment-option strong {
+  display: block;
+  min-width: 0;
+  color: #003153;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.amendment-nature .amendment-error {
+  margin: 15px 0 0;
+  color: #c62828;
+  font-size: 12px;
+}
+
+.amendment-nature .application-actions {
+  margin-top: 22px;
+}
+
+@media (max-width: 767px) {
+  .amendment-nature-card {
+    padding: 16px;
+  }
+
+  .amendment-nature .amendment-nature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .amendment-nature .amendment-option {
+    padding: 14px;
+  }
+
+  .amendment-nature .amendment-note {
+    font-size: 12px;
+  }
+}
