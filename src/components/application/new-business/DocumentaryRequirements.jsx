@@ -1,8 +1,25 @@
 
 import { useRef, useState } from "react";
 
+// ==========================================
+// IMAGE PATHS - LOCAL + GITHUB PAGES
+// ==========================================
+
+const BASE_URL = import.meta.env.BASE_URL;
+
+const QC_LOGO = `${BASE_URL}assets/images/qc-logo.png`;
+const QC_TREE_LOGO = `${BASE_URL}assets/images/qc-tree.png`;
+
+// ==========================================
+// FILE CONFIGURATION
+// ==========================================
+
 const acceptedTypes = ".jpeg,.jpg,.png,.pdf,.doc,.docx";
 const maxFileSize = 5 * 1024 * 1024;
+
+// ==========================================
+// DOCUMENT REQUIREMENTS
+// ==========================================
 
 const documents = [
   {
@@ -27,6 +44,10 @@ const documents = [
   },
 ];
 
+// ==========================================
+// PHOTO REQUIREMENTS
+// ==========================================
+
 const photos = [
   {
     id: "front",
@@ -46,7 +67,15 @@ const photos = [
   },
 ];
 
-function UploadField({ files = [], onChange, accept = acceptedTypes }) {
+// ==========================================
+// UPLOAD FIELD COMPONENT
+// ==========================================
+
+function UploadField({
+  files = [],
+  onChange,
+  accept = acceptedTypes,
+}) {
   const inputRef = useRef(null);
   const [dragging, setDragging] = useState(false);
 
@@ -56,7 +85,8 @@ function UploadField({ files = [], onChange, accept = acceptedTypes }) {
       .map((extension) => extension.trim().toLowerCase());
 
     const valid = selected.filter((file) => {
-      const extension = `.${file.name.split(".").pop().toLowerCase()}`;
+      const extension =
+        `.${file.name.split(".").pop().toLowerCase()}`;
 
       return (
         allowedExtensions.includes(extension) &&
@@ -84,7 +114,9 @@ function UploadField({ files = [], onChange, accept = acceptedTypes }) {
   return (
     <div className="doc-upload-wrapper">
       <div
-        className={`doc-upload-zone ${dragging ? "dragging" : ""}`}
+        className={`doc-upload-zone ${
+          dragging ? "dragging" : ""
+        }`}
         onDragOver={(event) => {
           event.preventDefault();
           setDragging(true);
@@ -113,7 +145,9 @@ function UploadField({ files = [], onChange, accept = acceptedTypes }) {
           multiple
           hidden
           onChange={(event) => {
-            validateFiles(Array.from(event.target.files || []));
+            validateFiles(
+              Array.from(event.target.files || [])
+            );
             event.target.value = "";
           }}
         />
@@ -127,7 +161,9 @@ function UploadField({ files = [], onChange, accept = acceptedTypes }) {
               key={`${file.name}-${index}`}
             >
               <i className="bi bi-file-earmark-check" />
-              <span title={file.name}>{file.name}</span>
+              <span title={file.name}>
+                {file.name}
+              </span>
             </div>
           ))}
         </div>
@@ -136,22 +172,42 @@ function UploadField({ files = [], onChange, accept = acceptedTypes }) {
   );
 }
 
+// ==========================================
+// DOCUMENTARY REQUIREMENTS COMPONENT
+// ==========================================
+
 export default function DocumentaryRequirements({
   onBack,
   onContinue,
 }) {
-  const [nanoEnterprise, setNanoEnterprise] = useState("");
+  const [nanoEnterprise, setNanoEnterprise] =
+    useState("");
+
   const [files, setFiles] = useState({});
-  const [photosExpanded, setPhotosExpanded] = useState(false);
-  const [checkedDocuments, setCheckedDocuments] = useState({});
+
+  const [photosExpanded, setPhotosExpanded] =
+    useState(false);
+
+  const [checkedDocuments, setCheckedDocuments] =
+    useState({});
+
   const [error, setError] = useState("");
 
+  // ==========================================
+  // CURRENT DATE
+  // ==========================================
+
   const today = new Date();
+
   const date = [
     today.getFullYear(),
     String(today.getMonth() + 1).padStart(2, "0"),
     String(today.getDate()).padStart(2, "0"),
   ].join("-");
+
+  // ==========================================
+  // FILE HANDLING
+  // ==========================================
 
   const handleFiles = (id, selectedFiles) => {
     setFiles((previous) => ({
@@ -167,6 +223,10 @@ export default function DocumentaryRequirements({
     setError("");
   };
 
+  // ==========================================
+  // DOCUMENT CHECKBOX
+  // ==========================================
+
   const toggleDocument = (id) => {
     setCheckedDocuments((previous) => ({
       ...previous,
@@ -174,40 +234,76 @@ export default function DocumentaryRequirements({
     }));
   };
 
+  // ==========================================
+  // CONTINUE
+  // ==========================================
+
   const handleContinue = () => {
-  setError("");
-  onContinue();
-    };
+    setError("");
+    onContinue();
+  };
+
+  // ==========================================
+  // RENDER
+  // ==========================================
 
   return (
     <div className="documentary-page">
+
+      {/* ======================================
+          GOVERNMENT HEADER
+      ====================================== */}
+
       <div className="documentary-government-header">
+
+        {/* QUEZON CITY LOGO */}
+
         <div className="documentary-government-logo">
           <img
-            src="/assets/images/qc-logo.png"
+            src={QC_LOGO}
             alt="Quezon City Government"
           />
         </div>
 
+        {/* GOVERNMENT TITLE */}
+
         <div className="documentary-government-title">
           <div>REPUBLIC OF THE PHILIPPINES</div>
+
           <div>QUEZON CITY</div>
-          <div>BUSINESS PERMITS AND LICENSING DEPARTMENT</div>
-          <small>Tel. no. 8988-4242 (Loc. 8174 / 8282)</small>
+
+          <div>
+            BUSINESS PERMITS AND LICENSING DEPARTMENT
+          </div>
+
+          <small>
+            Tel. no. 8988-4242 (Loc. 8174 / 8282)
+          </small>
         </div>
+
+        {/* QC TREE LOGO */}
 
         <div className="documentary-government-logo">
           <img
-            src="/assets/images/qc-tree.png"
+            src={QC_TREE_LOGO}
             alt="Quezon City Government"
           />
         </div>
       </div>
 
+      {/* ======================================
+          APPLICATION INFORMATION
+      ====================================== */}
+
       <div className="documentary-application-info">
+
+        {/* LEFT COLUMN */}
+
         <div className="documentary-info-column">
+
           <div className="documentary-info-row">
             <label>Application Type:</label>
+
             <span className="documentary-application-type">
               NEW
             </span>
@@ -215,44 +311,78 @@ export default function DocumentaryRequirements({
 
           <div className="documentary-info-row">
             <label>FISCAL YEAR:</label>
+
             <input
               type="text"
               value={today.getFullYear()}
               readOnly
             />
           </div>
+
         </div>
 
+        {/* RIGHT COLUMN */}
+
         <div className="documentary-info-column">
+
           <div className="documentary-info-row">
             <label>Date of Receipt:</label>
-            <input type="text" value={date} readOnly />
+
+            <input
+              type="text"
+              value={date}
+              readOnly
+            />
           </div>
 
           <div className="documentary-info-row">
             <label>Tracking Number:</label>
-            <input type="text" value="" readOnly />
+
+            <input
+              type="text"
+              value=""
+              readOnly
+            />
           </div>
+
         </div>
       </div>
 
+      {/* ======================================
+          SECTION HEADING
+      ====================================== */}
+
       <div className="documentary-section-heading">
         <div>
-          <h3>Basic Documentary Requirements</h3>
+          <h3>
+            Basic Documentary Requirements
+          </h3>
+
           <p>
-            (Allowed file types: .jpeg, .jpg, .png, .pdf, .doc and
-            .docx)
+            (Allowed file types: .jpeg, .jpg, .png,
+            .pdf, .doc and .docx)
           </p>
         </div>
       </div>
 
+      {/* ======================================
+          REQUIREMENTS CARD
+      ====================================== */}
+
       <section className="documentary-requirements-card">
+
+        {/* NANO ENTERPRISE QUESTION */}
+
         <div className="nano-enterprise-row">
+
           <div className="nano-enterprise-question">
-            <span className="document-required">*</span>
+            <span className="document-required">
+              *
+            </span>
+
             <span>
-              Are you a nano-enterprise with an asset size not
-              exceeding Php 50,000?
+              Are you a nano-enterprise with an asset
+              size not exceeding Php 50,000?
             </span>
 
             <span
@@ -264,6 +394,7 @@ export default function DocumentaryRequirements({
           </div>
 
           <div className="nano-enterprise-options">
+
             <label>
               <input
                 type="radio"
@@ -291,27 +422,55 @@ export default function DocumentaryRequirements({
               />
               No
             </label>
+
           </div>
         </div>
 
+        {/* ==================================
+            DOCUMENT UPLOAD LIST
+        ================================== */}
+
         <div className="documentary-upload-list">
+
           {documents.slice(0, 2).map((document) => (
-            <div className="documentary-upload-row" key={document.id}>
+            <div
+              className="documentary-upload-row"
+              key={document.id}
+            >
               <div className="documentary-upload-description">
+
                 <input
                   type="checkbox"
-                  checked={Boolean(checkedDocuments[document.id])}
-                  onChange={() => toggleDocument(document.id)}
+                  checked={Boolean(
+                    checkedDocuments[document.id]
+                  )}
+                  onChange={() =>
+                    toggleDocument(document.id)
+                  }
                 />
 
                 <div>
                   <div className="documentary-upload-title">
-                    <span className="document-required">*</span>
-                    <strong>{document.title}</strong>
-                    <span>({document.description})</span>
+
+                    <span className="document-required">
+                      *
+                    </span>
+
+                    <strong>
+                      {document.title}
+                    </strong>
+
+                    <span>
+                      ({document.description})
+                    </span>
+
                   </div>
-                  <small>Required</small>
+
+                  <small>
+                    Required
+                  </small>
                 </div>
+
               </div>
 
               <UploadField
@@ -323,12 +482,21 @@ export default function DocumentaryRequirements({
             </div>
           ))}
 
+          {/* ==================================
+              BUSINESS LOCATION PHOTOS
+          ================================== */}
+
           <div className="documentary-photo-section">
+
             <div className="documentary-photo-heading">
+
               <div className="documentary-upload-description">
+
                 <input
                   type="checkbox"
-                  checked={photos.every((photo) => files[photo.id]?.length)}
+                  checked={photos.every(
+                    (photo) => files[photo.id]?.length
+                  )}
                   onChange={(event) => {
                     if (event.target.checked) {
                       setPhotosExpanded(true);
@@ -339,16 +507,29 @@ export default function DocumentaryRequirements({
                 />
 
                 <div className="documentary-upload-title">
-                  <span className="document-required">*</span>
-                  <strong>Photos of location of business</strong>
-                  <small>(Required)</small>
+                  <span className="document-required">
+                    *
+                  </span>
+
+                  <strong>
+                    Photos of location of business
+                  </strong>
+
+                  <small>
+                    (Required)
+                  </small>
                 </div>
+
               </div>
 
               <button
                 type="button"
                 className="documentary-expand-button"
-                onClick={() => setPhotosExpanded((previous) => !previous)}
+                onClick={() =>
+                  setPhotosExpanded(
+                    (previous) => !previous
+                  )
+                }
                 aria-expanded={photosExpanded}
                 aria-label="Toggle photo requirements"
               >
@@ -360,22 +541,31 @@ export default function DocumentaryRequirements({
                   }`}
                 />
               </button>
+
             </div>
 
             {photosExpanded && (
               <div className="documentary-photo-list">
+
                 {photos.map((photo) => (
                   <div
                     className="documentary-upload-row documentary-photo-row"
                     key={photo.id}
                   >
                     <div className="documentary-upload-description">
+
                       <i className="bi bi-camera" />
 
                       <div className="documentary-upload-title">
-                        <span className="document-required">*</span>
-                        <strong>{photo.title}</strong>
+                        <span className="document-required">
+                          *
+                        </span>
+
+                        <strong>
+                          {photo.title}
+                        </strong>
                       </div>
+
                     </div>
 
                     <UploadField
@@ -387,39 +577,69 @@ export default function DocumentaryRequirements({
                     />
                   </div>
                 ))}
+
               </div>
             )}
           </div>
 
+          {/* ==================================
+              OTHER DOCUMENTARY FILES
+          ================================== */}
+
           <div className="documentary-upload-row">
+
             <div className="documentary-upload-description">
+
               <input
                 type="checkbox"
-                checked={Boolean(checkedDocuments.other)}
-                onChange={() => toggleDocument("other")}
+                checked={Boolean(
+                  checkedDocuments.other
+                )}
+                onChange={() =>
+                  toggleDocument("other")
+                }
               />
 
               <div className="documentary-upload-title">
-                <span>Other documentary file/s as needed</span>
+                <span>
+                  Other documentary file/s as needed
+                </span>
               </div>
+
             </div>
 
             <UploadField
               files={files.other}
-              onChange={(selected) => handleFiles("other", selected)}
+              onChange={(selected) =>
+                handleFiles("other", selected)
+              }
             />
+
           </div>
         </div>
 
+        {/* ==================================
+            ERROR MESSAGE
+        ================================== */}
+
         {error && (
-          <div className="documentary-error" role="alert">
+          <div
+            className="documentary-error"
+            role="alert"
+          >
             <i className="bi bi-exclamation-circle" />
             {error}
           </div>
         )}
+
       </section>
 
+      {/* ======================================
+          NAVIGATION BUTTONS
+      ====================================== */}
+
       <div className="application-actions documentary-actions">
+
         <button
           type="button"
           className="btn-back"
@@ -437,6 +657,7 @@ export default function DocumentaryRequirements({
           CONTINUE
           <i className="bi bi-arrow-right" />
         </button>
+
       </div>
     </div>
   );
