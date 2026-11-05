@@ -2,6 +2,23 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+// ==========================================
+// IMAGE PATHS - LOCAL + GITHUB PAGES
+// ==========================================
+
+const BASE_URL = import.meta.env.BASE_URL;
+
+const images = {
+  newBusiness: `${BASE_URL}assets/images/new-business.jpg`,
+  renewal: `${BASE_URL}assets/images/renewal.jpg`,
+  amendment: `${BASE_URL}assets/images/amendment.jpg`,
+  specialPermit: `${BASE_URL}assets/images/special-permit.jpg`,
+};
+
+// ==========================================
+// APPLICATION TYPES
+// ==========================================
+
 const applications = [
   {
     type: "new",
@@ -9,7 +26,7 @@ const applications = [
     icon: "bi-building-add",
     description:
       "All prospective business owners intending to establish a new enterprise within the city must apply for a New Business Permit.",
-    image: "/assets/images/new-business.jpg",
+    image: images.newBusiness,
     action: "Start Application",
   },
   {
@@ -18,7 +35,7 @@ const applications = [
     icon: "bi-arrow-repeat",
     description:
       "Annual renewal of business permits is mandatory for all existing and operational businesses within the city.",
-    image: "/assets/images/renewal.jpg",
+    image: images.renewal,
     action: "Start Renewal",
   },
   {
@@ -27,7 +44,7 @@ const applications = [
     icon: "bi-file-earmark-text",
     description:
       "Update your registered business information or amend your existing permit.",
-    image: "/assets/images/amendment.jpg",
+    image: images.amendment,
     action: "Start Amendment",
   },
   {
@@ -36,10 +53,14 @@ const applications = [
     icon: "bi-calendar-event",
     description:
       "Apply for permits for special events, temporary activities, and other business operations.",
-    image: "/assets/images/special-permit.jpg",
+    image: images.specialPermit,
     action: "Apply for Special Permit",
   },
 ];
+
+// ==========================================
+// FORMS AND AUTHORIZATION
+// ==========================================
 
 const forms = [
   {
@@ -65,9 +86,18 @@ const forms = [
   },
 ];
 
+// ==========================================
+// APPLICATION TYPES COMPONENT
+// ==========================================
+
 export default function ApplicationTypes() {
   const navigate = useNavigate();
+
   const [formsExpanded, setFormsExpanded] = useState(false);
+
+  // ==========================================
+  // APPLICATION NAVIGATION
+  // ==========================================
 
   const handleApplicationClick = (type) => {
     navigate(`/application/${type}`);
@@ -80,21 +110,37 @@ export default function ApplicationTypes() {
     }
   };
 
+  // ==========================================
+  // RENDER
+  // ==========================================
+
   return (
     <div className="home-page">
       <fieldset className="home-application-frame">
-        <legend className="home-frame-title">HOME</legend>
+        <legend className="home-frame-title">
+          HOME
+        </legend>
 
         <div className="home-frame-inner">
           <section className="application-section">
             <div className="container-fluid application-container">
+
+              {/* ==================================
+                  APPLICATION HEADING
+              ================================== */}
+
               <div className="application-heading">
                 <h1>TYPE OF APPLICATION</h1>
+
                 <p>
-                  Select the type of business permit transaction you want to
-                  process.
+                  Select the type of business permit
+                  transaction you want to process.
                 </p>
               </div>
+
+              {/* ==================================
+                  APPLICATION TYPE CARDS
+              ================================== */}
 
               <div className="application-image-grid">
                 {applications.map((application) => (
@@ -105,7 +151,9 @@ export default function ApplicationTypes() {
                     tabIndex={0}
                     aria-label={`${application.action}: ${application.title}`}
                     onClick={() =>
-                      handleApplicationClick(application.type)
+                      handleApplicationClick(
+                        application.type
+                      )
                     }
                     onKeyDown={(event) =>
                       handleApplicationKeyDown(
@@ -117,6 +165,8 @@ export default function ApplicationTypes() {
                       cursor: "pointer",
                     }}
                   >
+                    {/* BACKGROUND IMAGE */}
+
                     <div
                       className="application-image-background"
                       style={{
@@ -124,43 +174,72 @@ export default function ApplicationTypes() {
                       }}
                     />
 
+                    {/* IMAGE OVERLAY */}
+
                     <div className="application-image-overlay" />
 
+                    {/* CARD CONTENT */}
+
                     <div className="application-image-card-content">
+
+                      {/* ICON */}
+
                       <div className="application-image-icon">
-                        <i className={`bi ${application.icon}`} />
+                        <i
+                          className={`bi ${application.icon}`}
+                        />
                       </div>
+
+                      {/* TITLE */}
 
                       <h2 className="application-image-title">
                         {application.title}
                       </h2>
 
+                      {/* DESCRIPTION */}
+
                       <p className="application-image-description">
                         {application.description}
                       </p>
+
+                      {/* ACTION */}
 
                       <span
                         className="application-image-action"
                         aria-hidden="true"
                       >
-                        <span>{application.action}</span>
+                        <span>
+                          {application.action}
+                        </span>
+
                         <i className="bi bi-arrow-right" />
                       </span>
+
                     </div>
                   </article>
                 ))}
               </div>
 
+              {/* ==================================
+                  FORMS AND AUTHORIZATION
+              ================================== */}
+
               <section className="forms-section">
+
                 <div className="forms-heading">
+
                   <div className="forms-heading-icon">
                     <i className="bi bi-file-earmark-text" />
                   </div>
 
                   <div className="forms-heading-content">
-                    <h2>Forms & Authorization</h2>
+                    <h2>
+                      Forms &amp; Authorization
+                    </h2>
+
                     <p>
-                      Download forms for authorized representatives and contact
+                      Download forms for authorized
+                      representatives and contact
                       information changes.
                     </p>
                   </div>
@@ -168,11 +247,17 @@ export default function ApplicationTypes() {
                   <button
                     type="button"
                     className="forms-toggle"
-                    onClick={() => setFormsExpanded(!formsExpanded)}
+                    onClick={() =>
+                      setFormsExpanded(
+                        (previous) => !previous
+                      )
+                    }
                     aria-expanded={formsExpanded}
                   >
                     <span>
-                      {formsExpanded ? "Hide Forms" : "View Forms"}
+                      {formsExpanded
+                        ? "Hide Forms"
+                        : "View Forms"}
                     </span>
 
                     <i
@@ -183,20 +268,40 @@ export default function ApplicationTypes() {
                       }`}
                     />
                   </button>
+
                 </div>
+
+                {/* FORMS LIST */}
 
                 {formsExpanded && (
                   <div className="forms-list">
                     {forms.map((form) => (
-                      <div className="form-item" key={form.title}>
+                      <div
+                        className="form-item"
+                        key={form.title}
+                      >
+
+                        {/* FORM ICON */}
+
                         <div className="form-item-icon">
-                          <i className={`bi ${form.icon}`} />
+                          <i
+                            className={`bi ${form.icon}`}
+                          />
                         </div>
 
+                        {/* FORM DETAILS */}
+
                         <div className="form-item-content">
-                          <h3>{form.title}</h3>
-                          <p>{form.description}</p>
+                          <h3>
+                            {form.title}
+                          </h3>
+
+                          <p>
+                            {form.description}
+                          </p>
                         </div>
+
+                        {/* DOWNLOAD BUTTON */}
 
                         <a
                           href={form.url}
@@ -205,33 +310,53 @@ export default function ApplicationTypes() {
                           rel="noopener noreferrer"
                         >
                           <i className="bi bi-download" />
-                          <span>Download Form</span>
+
+                          <span>
+                            Download Form
+                          </span>
                         </a>
+
                       </div>
                     ))}
                   </div>
                 )}
+
               </section>
+
             </div>
           </section>
         </div>
       </fieldset>
 
+      {/* ======================================
+          HELP SECTION
+      ====================================== */}
+
       <section className="help-section">
         <div className="container-fluid application-container">
           <div className="help-content">
+
             <div>
-              <h2>Need help choosing an application type?</h2>
+              <h2>
+                Need help choosing an application type?
+              </h2>
+
               <p>
-                Review the Citizen's Charter or contact us for assistance with
+                Review the Citizen's Charter or
+                contact us for assistance with
                 your business permit transaction.
               </p>
             </div>
 
-            <a href="#" className="help-link">
+            <a
+              href="#"
+              className="help-link"
+            >
               View Citizen's Charter
+
               <i className="bi bi-arrow-right" />
             </a>
+
           </div>
         </div>
       </section>
