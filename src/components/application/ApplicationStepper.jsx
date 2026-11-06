@@ -20,82 +20,92 @@ export default function ApplicationStepper({
         </span>
       </div>
 
-      <div className="application-stepper">
-        {steps.map((stepName, index) => {
-          const stepNumber = index + 1;
-          const isActive = stepNumber === currentStep;
-          const isCompleted = stepNumber < currentStep;
+      {/* Horizontally scrollable stepper */}
+      <div
+        className="application-stepper-scroll"
+        role="region"
+        aria-label="Application progress steps"
+        tabIndex={0}
+      >
+        <div className="application-stepper">
+          {steps.map((stepName, index) => {
+            const stepNumber = index + 1;
+            const isActive = stepNumber === currentStep;
+            const isCompleted = stepNumber < currentStep;
 
-          return (
-            <div
-              className={`application-step ${
-                isActive
-                  ? "active"
-                  : isCompleted
-                  ? "completed"
-                  : ""
-              }`}
-              key={`${stepName}-${index}`}
-            >
-              <div className="step-top">
+            return (
+              <div
+                className={`application-step ${
+                  isActive
+                    ? "active"
+                    : isCompleted
+                    ? "completed"
+                    : ""
+                }`}
+                key={`${stepName}-${index}`}
+              >
+                <div className="step-top">
+                  <button
+                    type="button"
+                    className="step-number"
+                    onClick={() => onStepClick?.(stepNumber)}
+                    aria-label={`Go to step ${stepNumber}: ${stepName}`}
+                    aria-current={isActive ? "step" : undefined}
+                    title={`Go to ${stepName}`}
+                    style={{ cursor: "pointer" }}
+                  >
+                    {isCompleted ? (
+                      <i
+                        className="bi bi-check-lg"
+                        style={{ display: "block" }}
+                      />
+                    ) : (
+                      <span>{stepNumber}</span>
+                    )}
+                  </button>
+
+                  {index < steps.length - 1 && (
+                    <div className="step-line" />
+                  )}
+                </div>
+
                 <button
                   type="button"
-                  className="step-number"
+                  className="step-content"
                   onClick={() => onStepClick?.(stepNumber)}
-                  aria-label={`Go to step ${stepNumber}: ${stepName}`}
-                  aria-current={isActive ? "step" : undefined}
-                  title={`Go to ${stepName}`}
-                  style={{ cursor: "pointer" }}
+                  aria-label={`Go to ${stepName}`}
+                  style={{
+                    cursor: "pointer",
+                    border: "none",
+                    background: "transparent",
+                    textAlign: "left",
+                    width: "100%",
+                  }}
                 >
-                  {isCompleted ? (
-                    <i
-                      className="bi bi-check-lg"
-                      style={{ display: "block" }}
-                    />
-                  ) : (
-                    <span>{stepNumber}</span>
-                  )}
+                  <span className="step-status">
+                    {isActive
+                      ? "CURRENT"
+                      : isCompleted
+                      ? "COMPLETED"
+                      : "INCOMPLETE"}
+                  </span>
+
+                  <span className="step-name">
+                    {stepName
+                      .split(" ")
+                      .map((word, index, words) => (
+                        <span key={index}>
+                          {word}
+                          {index < words.length - 1 &&
+                            (index % 2 === 1 ? <br /> : " ")}
+                        </span>
+                      ))}
+                  </span>
                 </button>
-
-                {index < steps.length - 1 && (
-                  <div className="step-line" />
-                )}
               </div>
-
-              <button
-                type="button"
-                className="step-content"
-                onClick={() => onStepClick?.(stepNumber)}
-                aria-label={`Go to ${stepName}`}
-                style={{
-                  cursor: "pointer",
-                  border: "none",
-                  background: "transparent",
-                  textAlign: "left",
-                  width: "100%",
-                }}
-              >
-                <span className="step-status">
-                  {isActive
-                    ? "CURRENT"
-                    : isCompleted
-                    ? "COMPLETED"
-                    : "INCOMPLETE"}
-                </span>  
-                <span className="step-name">
-                  {stepName.split(" ").map((word, index, words) => (
-                    <span key={index}>
-                      {word}
-                      {index < words.length - 1 &&
-                        (index % 2 === 1 ? <br /> : " ")}
-                    </span>
-                  ))}
-                </span>
-
-              </button>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </div>
   );

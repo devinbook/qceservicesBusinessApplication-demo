@@ -2397,3 +2397,156 @@ input[type="radio"] {
     padding: 14px;
   }
 }
+
+/* =========================================
+   APPLICATION STEPPER - HORIZONTAL SCROLL
+========================================= */
+
+.application-progress-card {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Scroll container */
+.application-progress-scroll,
+.application-stepper-scroll {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #b9cbd6 transparent;
+}
+
+/* Inner stepper */
+.application-progress-card .application-stepper {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  min-width: 0;
+  overflow: visible;
+  padding-bottom: 8px;
+}
+
+/* Prevent overlapping */
+.application-progress-card .application-step {
+  flex: 1 0 0;
+  min-width: 0;
+  max-width: none;
+  box-sizing: border-box;
+}
+
+/* Keep circles aligned */
+.application-progress-card .step-top {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.application-progress-card .step-number {
+  flex: 0 0 36px;
+  width: 36px;
+  height: 36px;
+}
+
+/* Connecting lines */
+.application-progress-card .step-line {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 2px;
+  margin: 0 8px;
+}
+
+/* Step text */
+.application-progress-card .step-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  padding-top: 8px;
+  padding-right: 8px;
+}
+
+.application-progress-card .step-status {
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.application-progress-card .step-name {
+  font-size: 13px;
+  line-height: 1.4;
+  overflow-wrap: break-word;
+}
+
+/* =========================================
+   TABLET AND MOBILE
+========================================= */
+
+@media (max-width: 991.98px) {
+  .application-progress-card .application-stepper {
+    width: max-content;
+    min-width: 100%;
+  }
+
+  .application-progress-card .application-step {
+    flex: 0 0 145px;
+    width: 145px;
+    min-width: 145px;
+    max-width: 145px;
+  }
+
+  .application-progress-card .application-step:last-child {
+    flex: 0 0 145px;
+    width: 145px;
+    min-width: 145px;
+  }
+
+  .application-progress-card .step-content {
+    width: 100%;
+    padding-right: 12px;
+  }
+
+  .application-progress-card .step-status {
+    font-size: 11px;
+  }
+
+  .application-progress-card .step-name {
+    font-size: 13px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 575.98px) {
+  .application-progress-card {
+    padding: 16px 14px;
+  }
+
+  .application-progress-card .application-step {
+    flex: 0 0 135px;
+    width: 135px;
+    min-width: 135px;
+    max-width: 135px;
+  }
+
+  .application-progress-card .application-step:last-child {
+    flex: 0 0 135px;
+    width: 135px;
+    min-width: 135px;
+  }
+
+  .application-progress-card .step-name {
+    font-size: 13px;
+  }
+
+  .application-progress-card .step-status {
+    font-size: 11px;
+  }
+
+  .application-stepper-scroll {
+    padding-bottom: 6px;
+  }
+}
